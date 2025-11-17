@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Login Domótica</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+  </head>
+  <body>
+    <div class="login-container">
+      <h1>Domótica - Login</h1>
+      {% if error %}
+      <div class="error">{{ error }}</div>
+      {% endif %}
+      <form method="post">
+        <label>Usuario</label>
+        <input type="text" name="username" placeholder="admin o user" required />
+
+        <label>Contraseña</label>
+        <input type="password" name="password" placeholder="admin123 o user123" required />
+
+        <button type="submit">Ingresar</button>
+      </form>
+      <div class="hint">
+        <p>Usuarios de prueba:</p>
+        <ul>
+          <li>admin / admin123 (rol administrador)</li>
+          <li>user / user123 (rol usuario)</li>
+        </ul>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Panel Domótica</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+  </head>
+  <body>
+    <header>
+      <h1>Panel de Domótica</h1>
+      <div class="user-info">
+        <span>Usuario: <strong id="username"></strong> (rol: <strong id="role"></strong>)</span>
+        <a href="{{ url_for('logout') }}" class="btn-logout">Cerrar sesión</a>
+      </div>
+    </header>
+
+    <main>
+      <section class="panel">
+        <h2>Dispositivos</h2>
+        <div class="devices-grid" id="devices">
+          <!-- JS rellena esto -->
+        </div>
+      </section>
+
+      <section class="panel">
+        <h2>Sensores</h2>
+        <div class="sensors-grid">
+          <div class="sensor-card">
+            <h3>Temperatura</h3>
+            <p><span id="sensor-temperatura">--</span> °C</p>
+          </div>
+          <div class="sensor-card">
+            <h3>Movimiento</h3>
+            <p id="sensor-movimiento">--</p>
+          </div>
+          <div class="sensor-card">
+            <h3>Puerta</h3>
+            <p id="sensor-puerta">--</p>
+          </div>
+          <div class="sensor-card">
+            <h3>Humo</h3>
+            <p id="sensor-humo">--</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel">
+        <h2>Modos</h2>
+        <div class="modes">
+          <button class="btn" onclick="setMode('seguridad')">Modo Seguridad</button>
+          <button class="btn" onclick="setMode('ahorro')">Modo Ahorro</button>
+        </div>
+        <p class="note">
+          Modo Seguridad: alarma ON, luces encendidas.<br />
+          Modo Ahorro: todo apagado.
+        </p>
+      </section>
+
+      {% if role == "admin" %}
+      <section class="panel">
+        <h2>Administración (solo admin)</h2>
+        <div class="admin-add">
+          <input type="text" id="new-device-name" placeholder="Nombre nuevo dispositivo" />
+          <button class="btn" onclick="addDevice()">Agregar dispositivo</button>
+        </div>
+        <p class="note">Los nuevos dispositivos aparecen en la lista de controles.</p>
+      </section>
+      {% endif %}
+
+      <section class="panel">
+        <h2>Historial de eventos</h2>
+        <div class="events-controls">
+          <button class="btn" onclick="refreshEvents()">Actualizar</button>
+          <a class="btn" href="/api/events/export">Exportar CSV</a>
+        </div>
+        <table class="events-table">
+          <thead>
+            <tr>
+              <th>Fecha / Hora</th>
+              <th>Usuario</th>
+              <th>Acción</th>
+              <th>Dispositivo</th>
+              <th>Extra</th>
+            </tr>
+          </thead>
+          <tbody id="events-body">
+            <!-- JS rellena -->
+          </tbody>
+        </table>
+      </section>
+    </main>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+  </body>
+</html>
